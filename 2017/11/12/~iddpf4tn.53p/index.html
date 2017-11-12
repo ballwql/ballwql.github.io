@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title> | ballen博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/7.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">ballen博客</h1><a id="logo" href="/.">ballen博客</a><p class="description">专注于智能运维&amp;大数据</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"></h1><div class="post-meta">Nov 12, 2017</div><div class="post-content"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="ballen">
+  <title>&#27973;&#35848;Phoenix&#22312;HBase&#20013;&#30340;&#24212;&#29992;</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+  /*
+      http://www.oschina.net/question/124879_76399
+  */
+  
+  html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+   
+  body{
+      color:#444;
+      font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+      font-size:13px;
+      line-height:1.5em;
+      padding:1em;
+      margin:auto;
+      max-width:42em;
+      background:#fefefe;
+  }
+   
+  h1, h2, h3, h4, h5, h6 {
+      font-weight: bold;
+  }
+   
+  h1 {
+      color: #000000;
+      font-size: 28px;
+  }
+   
+  h2 {
+      border-bottom: 2px solid #CCCCCC;
+      color: #000000;
+      font-size: 24px;
+  }
+   
+  h3 {
+      border-bottom: 2px solid #CCCCCC;
+      font-size: 18px;
+  }
+   
+  h4 {
+      font-size: 16px;
+  }
+   
+  h5 {
+      font-size: 14px;
+  }
+   
+  h6 {
+      color: #777777;
+      background-color: inherit;
+      font-size: 14px;
+  }
+   
+  hr {
+      height: 0.2em;
+      border: 0;
+      color: #CCCCCC;
+      background-color: #CCCCCC;
+  }
+   
+  p, blockquote, ul, ol, dl, li, table, pre {
+      margin: 15px 0;
+  }
+   
+  p{
+      margin:1em 0;
+  }
+   
+  pre { 
+      background-color: #F8F8F8;    
+      border: 1px solid #CCCCCC;
+      border-radius: 3px;
+      overflow: auto;
+      padding: 5px;
+  }
+   
+  pre code {
+      background-color: #F8F8F8;
+      border: none;    
+      padding: 0;
+  }
+   
+  code {
+      font-family: Consolas, Monaco, Andale Mono, monospace;
+      background-color:#F8F8F8;
+      border: 1px solid #CCCCCC;
+      border-radius: 3px;
+      padding: 0 0.2em;
+      line-height: 1;
+  }
+   
+  pre > code {
+      border: 0;
+      margin: 0;
+      padding: 0;
+  }
+   
+   
+  a{ color: #0645ad; text-decoration:none;}
+  a:visited{ color: #0b0080; }
+  a:hover{ color: #06e; }
+  a:active{ color:#faa700; }
+  a:focus{ outline: thin dotted; }
+  a:hover, a:active{ outline: 0; }
+   
+  ::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+  ::selection{background:rgba(255,255,0,0.3);color:#000}
+   
+  a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+  a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+   
+  blockquote{
+      color:#666666;
+      margin:0;
+      padding-left: 3em;
+      border-left: 0.5em #EEE solid;
+  }
+   
+  ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+  li p:last-child { margin:0 }
+  dd { margin: 0 0 0 2em; }
+   
+  img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; max-width:100%;}
+   
+  table { border-collapse: collapse; border-spacing: 0; }
+  td { vertical-align: top; }
+   
+  @media only screen and (min-width: 480px) {
+      body{font-size:14px;}
+  }
+   
+  @media only screen and (min-width: 768px) {
+      body{font-size:16px;}
+  }
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">&#27973;&#35848;Phoenix&#22312;HBase&#20013;&#30340;&#24212;&#29992;</h1>
+<h2 class="author">ballen</h2>
+<h3 class="date">2017-11-11 21:00:00</h3>
+</div>
+<p>&#26368;&#36817;&#22312;&#30740;&#31350;&#22914;&#20309;&#21033;&#29992;HBase&#26469;&#26356;&#22909;&#28385;&#36275;&#19994;&#21153;&#38656;&#27714;&#65292;&#22312;&#36825;&#20010;&#36807;&#31243;&#20013;,&#26368;&#22823;&#30340;&#30171;&#28857;&#26159;HBase&#19981;&#25903;&#25345;SQL&#21270;&#26597;&#35810;&#65292;&#23548;&#33268;&#19994;&#21153;&#22312;&#20351;&#29992;&#26102;&#26080;&#27861;&#26356;&#22909;&#30340;&#21033;&#29992;&#29616;&#26377;&#30340;&#32463;&#39564;&#26469;&#25805;&#20316;HBase&#12290;&#34429;&#28982;HBase&#26412;&#36523;&#19981;&#25903;&#25345;SQL&#65292;&#20294;&#19994;&#30028;&#36824;&#26159;&#26377;&#29616;&#25104;SQL&#24341;&#25806;&#26469;&#25903;&#25345;&#65292;&#22914;Phoenix&#65292;&#25152;&#20197;&#20026;&#26356;&#22909;&#25903;&#25345;&#19994;&#21153;&#65292;&#21518;&#32493;&#35745;&#21010;&#23545;Phoenix&#23637;&#24320;&#30740;&#31350;&#65292;&#30475;&#26159;&#21542;&#33021;&#24341;&#20837;&#25105;&#20204;&#30340;HBase&#38598;&#32676;&#12290;&#26412;&#25991;&#21482;&#26159;&#23545;Phoenix&#20316;&#19968;&#20010;&#22823;&#27010;&#30340;&#20171;&#32461;&#12290;</p>
+<p>Phoenix&#20013;&#25991;&#32763;&#35793;&#20026;<code>&#20964;&#20976;</code>, &#20854;&#26368;&#26089;&#26159;Salesforce&#30340;&#19968;&#20010;&#24320;&#28304;&#39033;&#30446;&#65292;Salesforce&#32972;&#26223;&#26159;&#19968;&#20010;&#25630;ERP&#30340;&#65292;ERP&#36719;&#20214;&#19968;&#20010;&#24456;&#22823;&#30340;&#29305;&#28857;&#23601;&#26159;&#25968;&#25454;&#24211;&#25805;&#20316;&#65292;&#25152;&#20197;&#33021;&#25630;&#20986;&#19968;&#20010;&#25968;&#25454;&#24211;&#20013;&#38388;&#20214;&#20063;&#26159;&#24456;&#27491;&#24120;&#30340;&#12290;&#32780;&#21518;&#65292;Phoenix&#25104;&#20026;Apache&#22522;&#37329;&#30340;&#39030;&#32423;&#39033;&#30446;&#12290;</p>
+<p>Phoenix&#20855;&#20307;&#26159;&#20160;&#20040;&#21602;&#65292;&#20854;&#26412;&#36136;&#26159;&#29992;Java&#20889;&#30340;&#22522;&#20110;JDBC API&#25805;&#20316;HBase&#30340;&#24320;&#28304;SQL&#24341;&#25806;&#12290;&#23427;&#26377;&#22914;&#19979;&#20960;&#20010;&#21151;&#33021;&#29305;&#24615;&#65306;</p>
+<div class="figure">
+<img src="/2017/11/12/~iddpf4tn.53p/phoenix-introduction/phoenix_characteristic.png" alt="&#22270;1.phoenix_characteristics">
+<p class="caption">&#22270;1.phoenix_characteristics</p>
+</div>
+</body>
+</html>
+</div><div class="tags"></div><div class="post-nav"><a href="/2017/11/11/phoenix-introduction/" class="next">浅谈Phoenix在HBase中的应用</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="http://zendwind.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HBase/">HBase</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hadoop/">hadoop</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/HBase/" style="font-size: 15px;">HBase</a> <a href="/tags/python/" style="font-size: 15px;">python</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/~iddpf4tn.53p/">~iddpf4tn.53p</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/phoenix-introduction/">浅谈Phoenix在HBase中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/~x1rx4elt.34h/">浅谈Phoenix在HBase中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/15/python-read-dump/">Python解析mysqldump文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/11/hbase-read-write-exception-summary/">HBase读写异常问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/08/hadoop-ha-qjm/">Hadoop HA机制学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/first-blog/">开篇导言</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.cnblogs.com/ballwql" title="Cnblogs" target="_blank">Cnblogs</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">ballen博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.1.20/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
