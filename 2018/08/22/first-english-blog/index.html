@@ -4,17 +4,17 @@
 <h1 id="Introduction-of-HBase"><a href="#Introduction-of-HBase" class="headerlink" title="Introduction of HBase"></a>Introduction of HBase</h1><p>HBase is a distributed and column-oriented database based on hadoop, which is derived from Bigtable of Google. It is very popular in worldwide companies, and has lots of application scenarios. What characteristics it have been? I summerize the following five points:</p>
 <blockquote>
 <ul>
-<li>Large-scale data storage, P-level, in contrast with T-level of MySQL;</li>
-<li>High performance of read and write, random access, sorted write;</li>
-<li>Flexibility of horizontal expansion, no influence for existed nodes;</li>
-<li>High availability, Active/Standby Master, supporting seamless handover, ensured the healthy of cluster.</li>
-<li>Bulit on cheap machines, greatly reducing deployment costs.</li>
+<li><strong>Large-scale data storage, P-level, in contrast with T-level of MySQL;</strong></li>
+<li><strong>High performance of read and write, random access, sorted write;</strong></li>
+<li><strong>Flexibility of horizontal expansion, no influence for existed nodes;</strong></li>
+<li><strong>High availability, Active/Standby Master, supporting seamless handover, ensured the healthy of cluster.</strong></li>
+<li><strong>Bulit on cheap machines, greatly reducing deployment costs.</strong></li>
 </ul>
 </blockquote>
 <p>Anyway, the above of five points are basic, and there are also some other charactertics not being listed. As these advantages of HBase, our boss decided to try to use it as our data storage platform, and aimed at replacing the history databases, supporting data storing into HBase real-time, and querying data at ms-level. </p>
 <p>At initial stage, I was totally unknown HBase. Fortunately, HBase has been used in other department, and they have  accumulated many experiences. So we decided to learn from them, after one month learning, we basically mastered the deployment of HBase and some pits of HBase, especially the configuration of HBase, which has hundreds of  items. Meanwhile, we used the real-time data sync platform, which named <strong>TDBANK</strong> internally. With the help of TDBank, we can access business data conviently. Its essence  is data acquisition (similar canal of alibaba), data subscribe  and data publish (similar of kafka), data consumer uses storm to write data into HBase streamly.</p>
 <p>With the help of  these perfect platform components, Data from MySQL to HBase is flexible, fast, and safe. It reduces our a lot of work, and make us focus on the business logic.</p>
-<p>#Conclusion<br>This article just introduced some work and something about HBase, there are still lots of aspects not being involved. Next time, I will introduce more details of HBase. Thank you for your reading,see you next time!</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>This article just introduced some work and something about HBase, there are still lots of aspects not being involved. Next time, I will introduce more details of HBase. Thank you for your reading,see you next time!</p>
 </div><div class="article-footer-copyright">版权声明:本文由ballen原创，转载请注明出处, 本博客地址:zendwind.com</div><iframe src="/donate/?AliPayQR=null&amp;WeChatQR=/img/WeChatQR.png&amp;GitHub=null&amp;BTCQR=null&amp;BTCKEY=null&amp;PayPal=null" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe><div class="tags"><a href="/tags/work/">work</a></div><div class="post-nav"><a href="/2018/05/15/hadoop-small-file-storage/" class="next">【原】Hadoop小文件存储方案</a></div><div id="container"></div><link rel="stylesheet" href="/css/default.css?v=0.0.0"><script src="/js/gitment.browser.js?v=0.0.0"></script><script>var gitment = new Gitment({
   owner: 'ballwql## Your GitHub ID, e.g. username',
   repo: 'ballwql.github.io## The repository to store your comments, make sure you're the repo's owner, e.g. imsun.github.io',
